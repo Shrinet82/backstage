@@ -99,6 +99,28 @@ catalog:
       rules:
         - allow: [Template]
 
+    # Portfolio Templates
+    - type: file
+      target: ../../examples/templates/react-app/template.yaml
+      rules:
+        - allow: [Template]
+    - type: file
+      target: ../../examples/templates/express-backend/template.yaml
+      rules:
+        - allow: [Template]
+    - type: file
+      target: ../../examples/templates/flask-api/template.yaml
+      rules:
+        - allow: [Template]
+    - type: file
+      target: ../../examples/templates/go-service/template.yaml
+      rules:
+        - allow: [Template]
+    - type: file
+      target: ../../examples/templates/springboot-service/template.yaml
+      rules:
+        - allow: [Template]
+
     # Local example organizational data
     - type: file
       target: ../../examples/org.yaml
