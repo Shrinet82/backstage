@@ -1,0 +1,13 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: my-python-library
+  description: An example Python library for data processing.
+  tags:
+    - python
+    - library
+    - data
+spec:
+  type: library
+  lifecycle: production
+  owner: guests
