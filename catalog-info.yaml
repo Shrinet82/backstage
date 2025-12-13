@@ -1,13 +1,14 @@
 apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
-  name: my-portal
-  description: An example of a Backstage application.
+  name: developer-portal
+  title: My Portfolio Developer Portal
+  description: The central hub for all my projects and documentation.
   # Example for optional annotations
   # annotations:
   #   github.com/project-slug: backstage/backstage
   #   backstage.io/techdocs-ref: dir:.
 spec:
   type: website
-  owner: john@example.com
-  lifecycle: experimental
+  owner: guests
+  lifecycle: production

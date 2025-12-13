@@ -1,0 +1,15 @@
+# Backstage override configu
+auth:
+  # see https://backstage.io/docs/auth/ to learn about auth providers
+  providers:
+    # See https://backstage.io/docs/auth/guest/provider
+    guest: {}
+    github:
+      development:
+        clientId: 'Ov23lifM1ZEJWC3p6wpy'
+        clientSecret: '65d7f0fd899fe4adb486cd59b15b1f9ba6cb3eaa'
+        #ration for your local development environment
+        signIn:
+          resolvers:
+            # See https://backstage.io/docs/auth/github/provider#resolvers
+            - resolver: usernameMatchingUserEntityName
