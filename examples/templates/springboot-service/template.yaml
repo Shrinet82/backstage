@@ -66,6 +66,7 @@ spec:
           description: ${{ parameters.description }}
           owner: ${{ parameters.owner }}
           java_package: ${{ parameters.java_package }}
+          destination: ${{ parameters.repoUrl | parseRepoUrl }}
 
     - id: publish
       name: Publish
