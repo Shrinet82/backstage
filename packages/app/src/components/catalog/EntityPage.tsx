@@ -100,6 +100,10 @@ const cicdContent = (
   </EntitySwitch>
 );
 
+
+
+
+
 const entityWarningContent = (
   <>
     <EntitySwitch>
@@ -117,6 +121,8 @@ const entityWarningContent = (
         </Grid>
       </EntitySwitch.Case>
     </EntitySwitch>
+
+
 
     <EntitySwitch>
       <EntitySwitch.Case if={hasCatalogProcessingErrors}>
@@ -153,9 +159,13 @@ const serviceEntityPage = (
       {overviewContent}
     </EntityLayout.Route>
 
+
+
     <EntityLayout.Route path="/ci-cd" title="CI/CD">
       {cicdContent}
     </EntityLayout.Route>
+
+
 
     <EntityLayout.Route
       path="/kubernetes"
@@ -199,9 +209,13 @@ const websiteEntityPage = (
       {overviewContent}
     </EntityLayout.Route>
 
+
+
     <EntityLayout.Route path="/ci-cd" title="CI/CD">
       {cicdContent}
     </EntityLayout.Route>
+
+
 
     <EntityLayout.Route
       path="/kubernetes"

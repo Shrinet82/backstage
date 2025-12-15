@@ -1,0 +1,5 @@
+site_name: Backstage Example Docs
+nav:
+  - Home: index.md
+plugins:
+  - techdocs-core
