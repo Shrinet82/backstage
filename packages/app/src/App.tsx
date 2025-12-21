@@ -39,8 +39,29 @@ import { catalogEntityCreatePermission } from '@backstage/plugin-catalog-common/
 import { NotificationsPage } from '@backstage/plugin-notifications';
 import { SignalsDisplay } from '@backstage/plugin-signals';
 
+import { UnifiedThemeProvider } from '@backstage/theme';
+import { opsieLightTheme, opsieDarkTheme } from './theme/opsieTheme';
+
 const app = createApp({
   apis,
+  themes: [
+    {
+      id: 'opsie-light',
+      title: 'Opsie Light',
+      variant: 'light',
+      Provider: ({ children }) => (
+        <UnifiedThemeProvider theme={opsieLightTheme} children={children} />
+      ),
+    },
+    {
+      id: 'opsie-dark',
+      title: 'Opsie Dark',
+      variant: 'dark',
+      Provider: ({ children }) => (
+        <UnifiedThemeProvider theme={opsieDarkTheme} children={children} />
+      ),
+    },
+  ],
   bindRoutes({ bind }) {
     bind(catalogPlugin.externalRoutes, {
       createComponent: scaffolderPlugin.routes.root,
