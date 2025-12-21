@@ -1,0 +1,11 @@
+apiVersion: backstage.io/v1alpha1
+kind: User
+metadata:
+  name: shrinet82
+  annotations:
+    github.com/user-login: Shrinet82
+spec:
+  profile:
+    displayName: Shrinet82
+    email: shrinet82@example.com
+  memberOf: [guests]
