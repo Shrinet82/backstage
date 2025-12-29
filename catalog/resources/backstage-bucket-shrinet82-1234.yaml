@@ -1,0 +1,14 @@
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: backstage-bucket-shrinet82-1234
+  title: Backstage Demo Bucket
+  description: S3 bucket for storing Backstage infrastructure artifacts
+  annotations:
+    aws.amazon.com/s3-bucket-arn: arn:aws:s3:::backstage-bucket-shrinet82-1234
+    aws.amazon.com/s3-bucket-name: backstage-bucket-shrinet82-1234
+    aws.amazon.com/s3-bucket-region: us-east-1
+spec:
+  type: s3-bucket
+  owner: platform-team
+  system: opsie-platform

@@ -1,0 +1,103 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: create-aws-rds-mysql
+  title: Create AWS RDS MySQL
+  description: Provision an AWS RDS MySQL instance via Terraform
+  tags:
+    - aws
+    - rds
+    - mysql
+    - terraform
+spec:
+  owner: user:guest
+  type: infrastructure
+
+  parameters:
+    - title: Database Configuration
+      required:
+        - dbName
+        - dbPassword
+        - vpcSecurityGroupId
+        - dbSubnetGroupName
+        - awsRegion
+      properties:
+        dbName:
+          title: Database Name
+          type: string
+          description: Name for the RDS instance (used for identifier backstage-rds-${dbName})
+          pattern: ^[a-zA-Z0-9]+$
+          ui:autofocus: true
+        dbPassword:
+          title: Master Password
+          type: string
+          description: Master password for 'admin' user (min 8 chars)
+          ui:widget: password
+          minLength: 8
+        vpcSecurityGroupId:
+          title: VPC Security Group ID
+          type: string
+          description: Security Group ID (e.g., sg-xxxxxxxx)
+        dbSubnetGroupName:
+          title: DB Subnet Group Name
+          type: string
+          description: Name of the DB Subnet Group
+        awsRegion:
+          title: AWS Region
+          type: string
+          description: AWS Region to provision in
+          default: us-east-1
+          enum:
+            - us-east-1
+            - us-west-2
+            - eu-west-1
+        majorEngineVersion:
+          title: Major Engine Version
+          type: string
+          description: MySQL Major Version
+          default: '8.0'
+        family:
+          title: DB Parameter Group Family
+          type: string
+          description: Parameter group family
+          default: 'mysql8.0'
+        action:
+          title: Terraform Action
+          type: string
+          description: Action to perform
+          default: plan
+          enum:
+            - plan
+            - apply
+            - destroy
+
+  steps:
+    - id: log-inputs
+      name: Log Inputs
+      action: debug:log
+      input:
+        message: "Triggering Terraform for RDS '${{ parameters.dbName }}' in '${{ parameters.awsRegion }}'"
+
+    - id: trigger-workflow
+      name: Trigger GitHub Action
+      action: github:actions:dispatch
+      input:
+        workflowId: terraform-aws-rds.yml
+        repoUrl: github.com?repo=backstage-infra&owner=Shrinet82
+        branchOrTagName: main
+        workflowInputs:
+          db_name: ${{ parameters.dbName }}
+          db_password: ${{ parameters.dbPassword }}
+          vpc_security_group_id: ${{ parameters.vpcSecurityGroupId }}
+          db_subnet_group_name: ${{ parameters.dbSubnetGroupName }}
+          aws_region: ${{ parameters.awsRegion }}
+          major_engine_version: ${{ parameters.majorEngineVersion }}
+          family: ${{ parameters.family }}
+          action: ${{ parameters.action }}
+
+  output:
+    links:
+      - title: Infrastructure Repo
+        url: https://github.com/Shrinet82/backstage-infra
+      - title: Terraform Run Details
+        url: https://github.com/Shrinet82/backstage-infra/actions

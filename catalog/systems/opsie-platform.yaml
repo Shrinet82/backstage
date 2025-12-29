@@ -1,0 +1,9 @@
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: opsie-platform
+  title: Opsie Platform
+  description: The central platform for Opsie clinic operations
+spec:
+  owner: platform-team
+  domain: default/opsie-domain

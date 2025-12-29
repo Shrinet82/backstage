@@ -1,0 +1,8 @@
+apiVersion: backstage.io/v1alpha1
+kind: Domain
+metadata:
+  name: opsie-domain
+  title: Opsie Domain
+  description: The business domain for Opsie
+spec:
+  owner: platform-team

@@ -1,0 +1,13 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: opsie-api
+  title: Opsie API
+  description: Core platform API for Opsie clinic management
+spec:
+  type: service
+  lifecycle: production
+  owner: platform-team
+  system: opsie-platform
+  dependsOn:
+    - resource:default/backstage-bucket-shrinet82-1234

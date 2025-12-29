@@ -17,4 +17,4 @@ auth:
 integrations:
   github:
     - host: github.com
-      token: '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'
+      token: ${GITHUB_TOKEN}

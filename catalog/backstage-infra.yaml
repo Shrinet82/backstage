@@ -1,0 +1,11 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: backstage-infra
+  description: Infrastructure managed by Terraform for Backstage demos
+  annotations:
+    github.com/project-slug: Shrinet82/backstage-infra
+spec:
+  type: service
+  owner: platform-team
+  lifecycle: experimental

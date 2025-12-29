@@ -1,0 +1,77 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: create-aws-vpc
+  title: Create AWS VPC
+  description: Provision an AWS VPC via Terraform and GitHub Actions
+  tags:
+    - aws
+    - vpc
+    - terraform
+spec:
+  owner: user:guest
+  type: infrastructure
+
+  parameters:
+    - title: VPC Configuration
+      required:
+        - vpcName
+        - cidrBlock
+        - awsRegion
+      properties:
+        vpcName:
+          title: VPC Name
+          type: string
+          description: Name tag for the VPC
+          ui:autofocus: true
+        cidrBlock:
+          title: CIDR Block
+          type: string
+          description: IPv4 CIDR block for the VPC (e.g., 10.0.0.0/16)
+          default: 10.0.0.0/16
+          pattern: ^([0-9]{1,3}\.){3}[0-9]{1,3}(\/([0-9]|[1-2][0-9]|3[0-2]))?$
+        awsRegion:
+          title: AWS Region
+          type: string
+          description: AWS Region to provision in
+          default: us-east-1
+          enum:
+            - us-east-1
+            - us-west-2
+            - eu-west-1
+        action:
+          title: Terraform Action
+          type: string
+          description: Action to perform
+          default: plan
+          enum:
+            - plan
+            - apply
+            - destroy
+
+  steps:
+    - id: log-inputs
+      name: Log Inputs
+      action: debug:log
+      input:
+        message: "Triggering Terraform for VPC '${{ parameters.vpcName }}' (${{ parameters.cidrBlock }}) in '${{ parameters.awsRegion }}' - Action: ${{ parameters.action }}"
+
+    - id: trigger-workflow
+      name: Trigger GitHub Action
+      action: github:actions:dispatch
+      input:
+        workflowId: terraform-aws-vpc.yml
+        repoUrl: github.com?repo=backstage-infra&owner=Shrinet82
+        branchOrTagName: main
+        workflowInputs:
+          vpc_name: ${{ parameters.vpcName }}
+          cidr_block: ${{ parameters.cidrBlock }}
+          aws_region: ${{ parameters.awsRegion }}
+          action: ${{ parameters.action }}
+
+  output:
+    links:
+      - title: Infrastructure Repo
+        url: https://github.com/Shrinet82/backstage-infra
+      - title: Terraform Run Details
+        url: https://github.com/Shrinet82/backstage-infra/actions

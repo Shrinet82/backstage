@@ -1,0 +1,81 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: create-aws-s3-bucket
+  title: Create AWS S3 Bucket
+  description: Provision an S3 bucket via Terraform and GitHub Actions
+  tags:
+    - aws
+    - s3
+    - terraform
+spec:
+  owner: user:guest
+  type: infrastructure
+
+  parameters:
+    - title: Bucket Configuration
+      required:
+        - bucketName
+        - awsRegion
+        - environment
+      properties:
+        bucketName:
+          title: Bucket Name
+          type: string
+          description: Globally unique name for the S3 bucket (must start with backstage-)
+          pattern: ^backstage-.*$
+          ui:autofocus: true
+        awsRegion:
+          title: AWS Region
+          type: string
+          description: AWS Region to provision in
+          default: us-east-1
+          enum:
+            - us-east-1
+            - us-west-2
+            - eu-west-1
+        environment:
+          title: Environment
+          type: string
+          description: Deployment environment
+          default: development
+          enum:
+            - development
+            - staging
+            - production
+        action:
+          title: Terraform Action
+          type: string
+          description: Action to perform
+          default: plan
+          enum:
+            - plan
+            - apply
+            - destroy
+
+  steps:
+    - id: log-inputs
+      name: Log Inputs
+      action: debug:log
+      input:
+        message: "Triggering Terraform for bucket '${{ parameters.bucketName }}' in '${{ parameters.awsRegion }}' (${{ parameters.environment }}) - Action: ${{ parameters.action }}"
+
+    - id: trigger-workflow
+      name: Trigger GitHub Action
+      action: github:actions:dispatch
+      input:
+        workflowId: terraform-aws-deploy.yml
+        repoUrl: github.com?repo=backstage-infra&owner=Shrinet82
+        branchOrTagName: main
+        workflowInputs:
+          bucket_name: ${{ parameters.bucketName }}
+          aws_region: ${{ parameters.awsRegion }}
+          environment: ${{ parameters.environment }}
+          action: ${{ parameters.action }}
+
+  output:
+    links:
+      - title: Infrastructure Repo
+        url: https://github.com/Shrinet82/backstage-infra
+      - title: Terraform Run Details
+        url: https://github.com/Shrinet82/backstage-infra/actions

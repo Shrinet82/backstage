@@ -9,9 +9,9 @@ backend:
   # Used for enabling authentication, secret is shared by all backend plugins
   # See https://backstage.io/docs/auth/service-to-service-auth for
   # information on the format
-  # auth:
-  #   keys:
-  #     - secret: ${BACKEND_SECRET}
+  auth:
+    keys:
+      - secret: ${BACKEND_SECRET}
   baseUrl: http://localhost:7007
   listen:
     port: 7007
@@ -21,6 +21,11 @@ backend:
     connect-src: ["'self'", 'http:', 'https:']
     # Content-Security-Policy directives follow the Helmet format: https://helmetjs.github.io/#reference
     # Default Helmet Content-Security-Policy values can be removed by setting the key to false
+
+  # Whitelist reading from remote URLs
+  reading:
+    allow:
+      - host: raw.githubusercontent.com
   cors:
     origin: http://localhost:3000
     methods: [GET, HEAD, PATCH, POST, PUT, DELETE]
@@ -95,7 +100,7 @@ catalog:
           branch: 'main'
           repository: '.*'
         schedule:
-          frequency: { minutes: 30 }
+          frequency: { minutes: 5 }
           timeout: { minutes: 3 }
   locations:
     # Local example data, file locations are relative to the backend process, typically `packages/backend`
@@ -132,6 +137,43 @@ catalog:
       target: ../../examples/templates/springboot-service/template.yaml
       rules:
         - allow: [Template]
+    - type: file
+      target: ../../examples/templates/aws-s3/template.yaml
+      rules:
+        - allow: [Template]
+    - type: file
+      target: ../../examples/templates/aws-vpc/template.yaml
+      rules:
+        - allow: [Template]
+    - type: file
+      target: ../../examples/templates/aws-rds/template.yaml
+      rules:
+        - allow: [Template]
+
+    - type: file
+      target: ../../catalog/backstage-infra.yaml
+      rules:
+        - allow: [Component]
+
+    - type: file
+      target: ../../catalog/resources/*.yaml
+      rules:
+        - allow: [Resource]
+
+    - type: file
+      target: ../../catalog/services/*.yaml
+      rules:
+        - allow: [Component]
+
+    - type: file
+      target: ../../catalog/systems/*.yaml
+      rules:
+        - allow: [System]
+
+    - type: file
+      target: ../../catalog/domains/*.yaml
+      rules:
+        - allow: [Domain]
 
     # Local example organizational data
     - type: file
