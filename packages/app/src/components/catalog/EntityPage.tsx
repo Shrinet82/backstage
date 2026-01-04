@@ -61,6 +61,16 @@ import {
   EntityGithubActionsContent,
   isGithubActionsAvailable,
 } from '@backstage/plugin-github-actions';
+import {
+  EntityGrafanaDashboardsCard,
+  EntityGrafanaAlertsCard,
+  EntityOverviewDashboardViewer,
+} from '@k-phoen/backstage-plugin-grafana';
+import {
+  EntityArgoCDOverviewCard,
+  EntityArgoCDHistoryCard,
+  isArgocdAvailable,
+} from '@roadiehq/backstage-plugin-argo-cd';
 
 const techdocsContent = (
   <EntityTechdocsContent>
@@ -100,10 +110,6 @@ const cicdContent = (
   </EntitySwitch>
 );
 
-
-
-
-
 const entityWarningContent = (
   <>
     <EntitySwitch>
@@ -121,8 +127,6 @@ const entityWarningContent = (
         </Grid>
       </EntitySwitch.Case>
     </EntitySwitch>
-
-
 
     <EntitySwitch>
       <EntitySwitch.Case if={hasCatalogProcessingErrors}>
@@ -143,6 +147,9 @@ const overviewContent = (
     <Grid item md={6} xs={12}>
       <EntityCatalogGraphCard variant="gridItem" height={400} />
     </Grid>
+    <Grid item md={6} xs={12}>
+      <EntityGrafanaDashboardsCard />
+    </Grid>
 
     <Grid item md={4} xs={12}>
       <EntityLinksCard />
@@ -159,8 +166,6 @@ const serviceEntityPage = (
       {overviewContent}
     </EntityLayout.Route>
 
-
-
     <EntityLayout.Route path="/ci-cd" title="CI/CD">
       {cicdContent}
     </EntityLayout.Route>
@@ -172,8 +177,6 @@ const serviceEntityPage = (
     >
       <EntityGithubActionsContent />
     </EntityLayout.Route>
-
-
 
     <EntityLayout.Route
       path="/kubernetes"
@@ -208,6 +211,25 @@ const serviceEntityPage = (
     <EntityLayout.Route path="/docs" title="Docs">
       {techdocsContent}
     </EntityLayout.Route>
+
+    <EntityLayout.Route path="/grafana" title="Grafana">
+      <EntityOverviewDashboardViewer />
+    </EntityLayout.Route>
+
+    <EntityLayout.Route
+      path="/argocd"
+      title="ArgoCD"
+      if={isArgocdAvailable}
+    >
+      <Grid container spacing={3} alignItems="stretch">
+        <Grid item md={12}>
+          <EntityArgoCDOverviewCard />
+        </Grid>
+        <Grid item md={12}>
+          <EntityArgoCDHistoryCard />
+        </Grid>
+      </Grid>
+    </EntityLayout.Route>
   </EntityLayout>
 );
 
@@ -217,13 +239,9 @@ const websiteEntityPage = (
       {overviewContent}
     </EntityLayout.Route>
 
-
-
     <EntityLayout.Route path="/ci-cd" title="CI/CD">
       {cicdContent}
     </EntityLayout.Route>
-
-
 
     <EntityLayout.Route
       path="/kubernetes"
@@ -246,6 +264,25 @@ const websiteEntityPage = (
 
     <EntityLayout.Route path="/docs" title="Docs">
       {techdocsContent}
+    </EntityLayout.Route>
+
+    <EntityLayout.Route path="/grafana" title="Grafana">
+      <EntityOverviewDashboardViewer />
+    </EntityLayout.Route>
+
+    <EntityLayout.Route
+      path="/argocd"
+      title="ArgoCD"
+      if={isArgocdAvailable}
+    >
+      <Grid container spacing={3} alignItems="stretch">
+        <Grid item md={12}>
+          <EntityArgoCDOverviewCard />
+        </Grid>
+        <Grid item md={12}>
+          <EntityArgoCDHistoryCard />
+        </Grid>
+      </Grid>
     </EntityLayout.Route>
   </EntityLayout>
 );

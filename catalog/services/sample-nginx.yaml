@@ -1,0 +1,20 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: sample-nginx
+  description: Sample Nginx application deployed via ArgoCD GitOps
+  annotations:
+    argocd/app-name: sample-nginx
+    backstage.io/kubernetes-id: sample-nginx
+    backstage.io/kubernetes-namespace: default
+    grafana/overview-dashboard: 'http://139.59.77.78:31464/d/efa86fd1d0c121a26444b636a3f509a8/kubernetes-compute-resources-cluster?orgId=1&kiosk'
+    grafana/dashboard-selector: "tags @> 'nginx'"
+  tags:
+    - nginx
+    - gitops
+    - argocd
+spec:
+  type: service
+  lifecycle: production
+  owner: platform-team
+  system: backstage-system

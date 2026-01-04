@@ -1,0 +1,112 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: deploy-argocd-app
+  title: Deploy Application via ArgoCD
+  description: Create an ArgoCD Application to deploy your app to Kubernetes using GitOps
+  tags:
+    - argocd
+    - kubernetes
+    - gitops
+    - deployment
+spec:
+  owner: user:guest
+  type: deployment
+
+  parameters:
+    - title: Application Details
+      required:
+        - appName
+        - repoUrl
+        - path
+      properties:
+        appName:
+          title: Application Name
+          type: string
+          description: Name for the ArgoCD application
+          pattern: ^[a-z0-9-]+$
+          ui:autofocus: true
+        namespace:
+          title: Target Namespace
+          type: string
+          description: Kubernetes namespace to deploy to
+          default: default
+        repoUrl:
+          title: Git Repository URL
+          type: string
+          description: Git repository containing your Kubernetes manifests or Helm chart
+          default: 'https://github.com/Shrinet82/backstage-infra'
+        path:
+          title: Path in Repository
+          type: string
+          description: Path to Kubernetes manifests or Helm chart within the repo
+          default: 'k8s-manifests'
+        branch:
+          title: Target Branch
+          type: string
+          description: Git branch to track
+          default: main
+
+    - title: Sync Options
+      properties:
+        syncPolicy:
+          title: Sync Policy
+          type: string
+          description: How ArgoCD should sync the application
+          default: manual
+          enum:
+            - manual
+            - automated
+        prune:
+          title: Enable Auto-Prune
+          type: string
+          description: Automatically delete resources removed from Git
+          default: 'false'
+          enum:
+            - 'true'
+            - 'false'
+        selfHeal:
+          title: Enable Self-Heal
+          type: string
+          description: Automatically sync when drift is detected
+          default: 'false'
+          enum:
+            - 'true'
+            - 'false'
+        notifyEmail:
+          title: Notification Email (Optional)
+          type: string
+          description: Email address to notify on deployment
+          default: ''
+
+  steps:
+    - id: log-inputs
+      name: Log Deployment Request
+      action: debug:log
+      input:
+        message: "Creating ArgoCD Application '${{ parameters.appName }}' from '${{ parameters.repoUrl }}/${{ parameters.path }}' to namespace '${{ parameters.namespace }}'"
+
+    - id: trigger-workflow
+      name: Trigger ArgoCD Deployment Workflow
+      action: github:actions:dispatch
+      input:
+        workflowId: argocd-deploy.yml
+        repoUrl: github.com?repo=backstage-infra&owner=Shrinet82
+        branchOrTagName: main
+        workflowInputs:
+          app_name: ${{ parameters.appName }}
+          namespace: ${{ parameters.namespace }}
+          repo_url: ${{ parameters.repoUrl }}
+          path: ${{ parameters.path }}
+          branch: ${{ parameters.branch }}
+          sync_policy: ${{ parameters.syncPolicy }}
+          prune: '${{ parameters.prune }}'
+          self_heal: '${{ parameters.selfHeal }}'
+          notify_email: ${{ parameters.notifyEmail }}
+
+  output:
+    links:
+      - title: ArgoCD Dashboard
+        url: https://139.59.77.78:32447/applications/${{ parameters.appName }}
+      - title: View Deployment Workflow
+        url: https://github.com/Shrinet82/backstage-infra/actions

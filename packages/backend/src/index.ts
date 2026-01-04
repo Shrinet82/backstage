@@ -64,4 +64,8 @@ backend.add(import('@backstage/plugin-kubernetes-backend'));
 // notifications and signals plugins
 backend.add(import('@backstage/plugin-notifications-backend'));
 backend.add(import('@backstage/plugin-signals-backend'));
+
+// ArgoCD plugin
+backend.add(import('@roadiehq/backstage-plugin-argo-cd-backend'));
+
 backend.start();

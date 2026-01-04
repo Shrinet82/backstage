@@ -49,12 +49,35 @@ integrations:
     #   token: ${GHE_TOKEN}
 
 proxy:
-  ### Example for how to add a proxy endpoint for the frontend.
-  ### A typical reason to do this is to handle HTTPS and CORS for internal services.
-  # endpoints:
-  #   '/test':
-  #     target: 'https://example.com'
-  #     changeOrigin: true
+  endpoints:
+    '/grafana/api':
+      target: http://139.59.77.78:31464/
+      changeOrigin: true
+      credentials: require
+      headers:
+        Authorization: Basic ${GRAFANA_AUTH}
+    '/argocd/api':
+      target: https://139.59.77.78:32447/api/v1/
+      changeOrigin: true
+      secure: false
+      headers:
+        Cookie: argocd.token=${ARGOCD_AUTH_TOKEN}
+
+grafana:
+  domain: http://139.59.77.78:31464
+  unifiedAlerting: true
+
+argocd:
+  baseUrl: https://139.59.77.78:32447
+  username: admin
+  password: ${ARGOCD_PASSWORD}
+  appLocatorMethods:
+    - type: 'config'
+      instances:
+        - name: main
+          url: https://139.59.77.78:32447
+          username: admin
+          password: ${ARGOCD_PASSWORD}
 
 # Reference documentation http://backstage.io/docs/features/techdocs/configuration
 # Note: After experimenting with basic setup, use CI/CD to generate docs
@@ -147,6 +170,10 @@ catalog:
         - allow: [Template]
     - type: file
       target: ../../examples/templates/aws-rds/template.yaml
+      rules:
+        - allow: [Template]
+    - type: file
+      target: ../../examples/templates/argocd-deploy/template.yaml
       rules:
         - allow: [Template]
 

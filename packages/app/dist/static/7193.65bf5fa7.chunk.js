@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkapp=self.webpackChunkapp||[]).push([["7193"],{93616(a,r,e){e.d(r,{LatestWorkflowRunCard:()=>s.MM,LatestWorkflowsForBranchCard:()=>s.Zg,RecentWorkflowRunsCard:()=>s.P4});var s=e(40886);e(14041),e(29)}}]);

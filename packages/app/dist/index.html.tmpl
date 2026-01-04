@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="description"
+      content="Backstage is an open source framework for building developer portals"
+    />
+    <!--
+      manifest.json provides metadata used when your web app is installed on a
+      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
+    -->
+    <link
+      rel="manifest"
+      href="<%= publicPath %>/manifest.json"
+      crossorigin="use-credentials"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" href="<%= publicPath %>/favicon.ico" />
+    <link rel="shortcut icon" href="<%= publicPath %>/favicon.ico" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="<%= publicPath %>/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="<%= publicPath %>/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="<%= publicPath %>/favicon-16x16.png"
+    />
+    <link
+      rel="mask-icon"
+      href="<%= publicPath %>/safari-pinned-tab.svg"
+      color="#5bbad5"
+    />
+    <title><%= config.getOptionalString('app.title') ?? 'Backstage' %></title>
+  <meta name="backstage-app-mode" content="public"><meta name="backstage-public-path" content="<%= publicPath %>/"><script defer src="<%= publicPath %>/static/runtime.88712466.js"></script><script defer src="<%= publicPath %>/static/module-backstage.c7c0595e.js"></script><script defer src="<%= publicPath %>/static/module-material-ui.db40b674.js"></script><script defer src="<%= publicPath %>/static/module-lodash.b785c3c1.js"></script><script defer src="<%= publicPath %>/static/module-date-fns.41ce547a.js"></script><script defer src="<%= publicPath %>/static/module-azure.598a2c68.js"></script><script defer src="<%= publicPath %>/static/module-yaml.ef8d0620.js"></script><script defer src="<%= publicPath %>/static/module-typespec.d1bbafee.js"></script><script defer src="<%= publicPath %>/static/module-mui.f41cbaa6.js"></script><script defer src="<%= publicPath %>/static/module-material-table.2f9e3edd.js"></script><script defer src="<%= publicPath %>/static/module-dagrejs.fe52d00e.js"></script><script defer src="<%= publicPath %>/static/module-micromark-core-commonmark.6d530f9d.js"></script><script defer src="<%= publicPath %>/static/module-octokit.86bc25eb.js"></script><script defer src="<%= publicPath %>/static/module-zod.1507b320.js"></script><script defer src="<%= publicPath %>/static/module-react-dom.bca76fd2.js"></script><script defer src="<%= publicPath %>/static/module-xterm.5afab2fb.js"></script><script defer src="<%= publicPath %>/static/module-photoswipe.07baf6d2.js"></script><script defer src="<%= publicPath %>/static/module-react-beautiful-dnd.7930f1cc.js"></script><script defer src="<%= publicPath %>/static/module-react-hook-form.13e7e30a.js"></script><script defer src="<%= publicPath %>/static/module-luxon.4bc9a4e3.js"></script><script defer src="<%= publicPath %>/static/module-js-yaml.c161f7ee.js"></script><script defer src="<%= publicPath %>/static/module-i18next.bb92c791.js"></script><script defer src="<%= publicPath %>/static/module-remix-run.a7c3d136.js"></script><script defer src="<%= publicPath %>/static/vendor.419e4482.js"></script><script defer src="<%= publicPath %>/static/main.f977ee23.js"></script><link href="<%= publicPath %>/static/vendor.786a373f.css" rel="stylesheet"></head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+    <!--
+      This HTML file is a template.
+      If you open it directly in the browser, you will see an empty page.
+
+      You can add webfonts, meta tags, or analytics to this file.
+      The build step will place the bundled scripts into the <body> tag.
+
+      To begin the development, run `yarn start`.
+      To create a production bundle, use `yarn build`.
+    -->
+  </body>
+</html>

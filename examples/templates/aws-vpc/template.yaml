@@ -3,11 +3,12 @@ kind: Template
 metadata:
   name: create-aws-vpc
   title: Create AWS VPC
-  description: Provision an AWS VPC via Terraform and GitHub Actions
+  description: Provision an AWS VPC via Terraform and GitHub Actions with cost estimation
   tags:
     - aws
     - vpc
     - terraform
+    - infracost
 spec:
   owner: user:guest
   type: infrastructure
@@ -39,6 +40,24 @@ spec:
             - us-east-1
             - us-west-2
             - eu-west-1
+        owner:
+          title: Owner
+          type: string
+          description: Team or individual responsible for this resource
+          default: platform-team
+        costCenter:
+          title: Cost Center
+          type: string
+          description: Cost allocation identifier for billing
+          default: engineering
+          enum:
+            - engineering
+            - data-science
+            - infrastructure
+            - product
+
+    - title: Terraform Action & Notifications
+      properties:
         action:
           title: Terraform Action
           type: string
@@ -48,8 +67,32 @@ spec:
             - plan
             - apply
             - destroy
+        enableCostEstimation:
+          title: Enable Cost Estimation
+          type: boolean
+          description: Run Infracost to estimate monthly costs before apply
+          default: true
+        notifyEmail:
+          title: Notification Email (Optional)
+          type: string
+          description: Email address to notify on completion
+          default: ''
+          pattern: ^$|^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$
+        confirmDestroy:
+          title: I confirm I want to DESTROY this resource
+          type: boolean
+          description: Required confirmation for destroy action
+          default: false
+          ui:widget: checkbox
 
   steps:
+    - id: validate-destroy
+      name: Validate Destroy Confirmation
+      action: debug:log
+      if: ${{ parameters.action === 'destroy' and parameters.confirmDestroy !== true }}
+      input:
+        message: '⚠️ DESTROY action requires confirmation checkbox. Aborting.'
+
     - id: log-inputs
       name: Log Inputs
       action: debug:log
@@ -59,6 +102,7 @@ spec:
     - id: trigger-workflow
       name: Trigger GitHub Action
       action: github:actions:dispatch
+      if: ${{ parameters.action !== 'destroy' or parameters.confirmDestroy === true }}
       input:
         workflowId: terraform-aws-vpc.yml
         repoUrl: github.com?repo=backstage-infra&owner=Shrinet82
@@ -67,11 +111,17 @@ spec:
           vpc_name: ${{ parameters.vpcName }}
           cidr_block: ${{ parameters.cidrBlock }}
           aws_region: ${{ parameters.awsRegion }}
+          owner: ${{ parameters.owner }}
+          cost_center: ${{ parameters.costCenter }}
           action: ${{ parameters.action }}
+          enable_cost_estimation: ${{ parameters.enableCostEstimation }}
+          notify_email: ${{ parameters.notifyEmail }}
 
   output:
     links:
       - title: Infrastructure Repo
         url: https://github.com/Shrinet82/backstage-infra
       - title: Terraform Run Details
+        url: https://github.com/Shrinet82/backstage-infra/actions
+      - title: Cost Estimation (Infracost)
         url: https://github.com/Shrinet82/backstage-infra/actions

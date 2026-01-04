@@ -4,6 +4,9 @@ metadata:
   name: opsie-api
   title: Opsie API
   description: Core platform API for Opsie clinic management
+  annotations:
+    grafana/dashboard-selector: "tags @> 'opsie'"
+    grafana/alert-label-selector: 'service=opsie-api'
 spec:
   type: service
   lifecycle: production
