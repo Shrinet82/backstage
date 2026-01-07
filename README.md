@@ -26,6 +26,26 @@ A production-grade **Internal Developer Platform (IDP)** built with [Backstage](
 
 ---
 
+## 📖 Documentation
+
+| Document                                       | Description                                    |
+| ---------------------------------------------- | ---------------------------------------------- |
+| 📘 **[README.md](README.md)**                  | This file - Quick start & feature overview     |
+| 📗 **[ARCHITECTURE.md](docs/ARCHITECTURE.md)** | Complete technical documentation with diagrams |
+
+### What's in ARCHITECTURE.md?
+
+- ✅ **Executive Summary** - Platform overview & metrics
+- ✅ **High-Level Architecture** - System design diagrams
+- ✅ **Multi-Cloud Architecture** - AWS/GCP/Azure provisioning
+- ✅ **Feature Deep-Dives** - S3, VPC, RDS, ArgoCD
+- ✅ **RBAC & Authentication** - Permission flows
+- ✅ **Observability Stack** - Grafana/Prometheus/K8s
+- ✅ **Configuration Reference** - All environment variables
+- ✅ **User Guides** - For developers & platform engineers
+
+---
+
 ## ✨ Features Overview
 
 ### Core Capabilities
