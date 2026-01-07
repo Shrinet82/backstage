@@ -117,7 +117,23 @@ const routes = (
         <ReportIssue />
       </TechDocsAddons>
     </Route>
-    <Route path="/create" element={<ScaffolderPage />} />
+    <Route 
+      path="/create" 
+      element={
+        <ScaffolderPage 
+          groups={[
+            {
+              title: 'Development Templates',
+              filter: entity => entity?.spec?.type === 'service' || entity?.spec?.type === 'website',
+            },
+            {
+              title: 'Infrastructure Templates',
+              filter: entity => entity?.spec?.type === 'infrastructure' || entity?.spec?.type === 'deployment',
+            },
+          ]}
+        />
+      } 
+    />
     <Route path="/api-docs" element={<ApiExplorerPage />} />
     <Route
       path="/catalog-import"

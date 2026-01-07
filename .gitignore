@@ -1,2 +1,31 @@
+# Dependencies
 node_modules
+
+# Infrastructure repo (separate git)
 backstage-infra/
+
+# Environment files (SENSITIVE - never commit!)
+.env
+.env.local
+.env.*.local
+*.env
+
+# Build outputs
+dist
+dist-types
+
+# IDE
+.idea
+.vscode
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

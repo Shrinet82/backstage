@@ -208,6 +208,12 @@ catalog:
       rules:
         - allow: [User, Group]
 
+    # User and Group entities for RBAC
+    - type: file
+      target: ../../catalog/org/*.yaml
+      rules:
+        - allow: [User, Group]
+
     - type: file
       target: ../../examples/user-shrinet82.yaml
       rules:
