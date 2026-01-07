@@ -118,7 +118,7 @@ spec:
           owner: ${{ parameters.owner }}
           cost_center: ${{ parameters.costCenter }}
           action: ${{ parameters.action }}
-          enable_cost_estimation: ${{ parameters.enableCostEstimation }}
+          enable_cost_estimation: '${{ parameters.enableCostEstimation | string }}'
           notify_email: ${{ parameters.notifyEmail }}
 
   output:
