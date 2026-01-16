@@ -1,4 +1,4 @@
-# Backstage override configu
+# Backstage override configuration for your local development environment
 auth:
   # see https://backstage.io/docs/auth/ to learn about auth providers
   providers:
@@ -8,7 +8,6 @@ auth:
       development:
         clientId: ${GITHUB_CLIENT_ID}
         clientSecret: ${GITHUB_CLIENT_SECRET}
-        #ration for your local development environment
         signIn:
           resolvers:
             # See https://backstage.io/docs/auth/github/provider#resolvers

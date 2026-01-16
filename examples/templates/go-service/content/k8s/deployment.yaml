@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ${{ values.component_id }}
+  labels:
+    app: ${{ values.component_id }}
+    backstage.io/kubernetes-id: ${{ values.component_id }}
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ${{ values.component_id }}
+  template:
+    metadata:
+      labels:
+        app: ${{ values.component_id }}
+        backstage.io/kubernetes-id: ${{ values.component_id }}
+    spec:
+      containers:
+        - name: ${{ values.component_id }}
+          image: nginx:alpine
+          ports:
+            - containerPort: 80
+          resources:
+            limits:
+              cpu: '50m'
+              memory: '128Mi'
+            requests:
+              cpu: '25m'
+              memory: '64Mi'
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ${{ values.component_id }}
+  labels:
+    app: ${{ values.component_id }}
+spec:
+  type: NodePort
+  ports:
+    - port: 80
+      targetPort: 80
+  selector:
+    app: ${{ values.component_id }}

@@ -51,31 +51,31 @@ integrations:
 proxy:
   endpoints:
     '/grafana/api':
-      target: http://139.59.77.78:31464/
+      target: http://143.110.177.137:32395/
       changeOrigin: true
       credentials: require
       headers:
         Authorization: Basic ${GRAFANA_AUTH}
     '/argocd/api':
-      target: https://139.59.77.78:32447/api/v1/
+      target: https://143.110.177.137:32477/api/v1/
       changeOrigin: true
       secure: false
       headers:
         Cookie: argocd.token=${ARGOCD_AUTH_TOKEN}
 
 grafana:
-  domain: http://139.59.77.78:31464
+  domain: http://143.110.177.137:32395
   unifiedAlerting: true
 
 argocd:
-  baseUrl: https://139.59.77.78:32447
+  baseUrl: https://143.110.177.137:32477
   username: admin
   password: ${ARGOCD_PASSWORD}
   appLocatorMethods:
     - type: 'config'
       instances:
         - name: main
-          url: https://139.59.77.78:32447
+          url: https://143.110.177.137:32477
           username: admin
           password: ${ARGOCD_PASSWORD}
 
@@ -170,6 +170,10 @@ catalog:
         - allow: [Template]
     - type: file
       target: ../../examples/templates/aws-rds/template.yaml
+      rules:
+        - allow: [Template]
+    - type: file
+      target: ../../examples/templates/azure-storage/template.yaml
       rules:
         - allow: [Template]
     - type: file

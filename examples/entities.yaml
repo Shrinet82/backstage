@@ -18,7 +18,7 @@ metadata:
     # Grafana observability
     grafana/dashboard-selector: "tags @> 'example'"
     grafana/alert-label-selector: 'service=example-website'
-    grafana/overview-dashboard: 'http://139.59.77.78:31464/d/efa86fd1d0c121a26444b636a3f509a8/kubernetes-compute-resources-cluster?orgId=1&kiosk'
+    grafana/overview-dashboard: 'http://143.110.177.137:32395/d/efa86fd1d0c121a26444b636a3f509a8/kubernetes-compute-resources-cluster?orgId=1&kiosk'
 spec:
   type: website
   lifecycle: experimental

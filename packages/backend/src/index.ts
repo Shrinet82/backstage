@@ -42,16 +42,19 @@ backend.add(import('@backstage/plugin-catalog-backend-module-logs'));
 
 // permission plugin
 backend.add(import('@backstage/plugin-permission-backend'));
-// Custom RBAC Permission Policy
-import { rbacPermissionPolicy } from './plugins/rbacPolicy';
-backend.add(rbacPermissionPolicy);
+// Using allow-all-policy since custom RBAC is temporarily disabled
+backend.add(import('@backstage/plugin-permission-backend-module-allow-all-policy'));
+// Custom RBAC Permission Policy (temporarily disabled for debugging)
+// import { rbacPermissionPolicy } from './plugins/rbacPolicy';
+// backend.add(rbacPermissionPolicy);
 
 // search plugin
 backend.add(import('@backstage/plugin-search-backend'));
 
 // search engine
 // See https://backstage.io/docs/features/search/search-engines
-backend.add(import('@backstage/plugin-search-backend-module-pg'));
+// NOTE: Using in-memory SQLite, so disabling PG search module
+// backend.add(import('@backstage/plugin-search-backend-module-pg'));
 
 // search collators
 backend.add(import('@backstage/plugin-search-backend-module-catalog'));

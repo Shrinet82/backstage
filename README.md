@@ -223,7 +223,7 @@ graph TB
 
 | Resource Type      | AWS                     | GCP              | Azure           |
 | ------------------ | ----------------------- | ---------------- | --------------- |
-| **Object Storage** | S3 Buckets ✅           | Cloud Storage 🔄 | Blob Storage 🔄 |
+| **Object Storage** | S3 Buckets ✅           | Cloud Storage 🔄 | Blob Storage ✅ |
 | **Networking**     | VPC ✅                  | VPC 🔄           | VNet 🔄         |
 | **Databases**      | RDS MySQL/PostgreSQL ✅ | Cloud SQL 🔄     | Azure SQL 🔄    |
 | **Kubernetes**     | EKS 🔄                  | GKE 🔄           | AKS 🔄          |
@@ -300,6 +300,15 @@ sequenceDiagram
 | **Resources Created** | ArgoCD Application, K8s Resources             |
 | **Sync Policies**     | Manual or Automated                           |
 | **Notifications**     | ✅ Email alerts                               |
+
+#### Azure Storage Template
+
+| Aspect                | Details                                         |
+| --------------------- | ----------------------------------------------- |
+| **Purpose**           | Provision Azure Storage Accounts                |
+| **Parameters**        | storageAccountName, resourceGroupName, location |
+| **Resources Created** | Storage Account, Resource Group                 |
+| **Notifications**     | ✅ Email alerts                                 |
 
 ---
 

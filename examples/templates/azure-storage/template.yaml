@@ -1,0 +1,83 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: create-azure-storage
+  title: Create Azure Storage Account
+  description: Provision an Azure Storage Account via Terraform and GitHub Actions
+  tags:
+    - azure
+    - storage
+    - terraform
+spec:
+  owner: user:guest
+  type: infrastructure
+
+  parameters:
+    - title: Storage Account Configuration
+      required:
+        - storageAccountName
+        - location
+        - resourceGroupName
+      properties:
+        storageAccountName:
+          title: Storage Account Name
+          type: string
+          description: Globally unique name for the storage account (lowercase letters and numbers only, 3-24 chars)
+          pattern: ^[a-z0-9]{3,24}$
+          ui:autofocus: true
+        resourceGroupName:
+          title: Resource Group Name
+          type: string
+          description: Name of the resource group
+          default: backstage-demo-rg
+        location:
+          title: Azure Region
+          type: string
+          description: Azure Region to provision in
+          default: East US
+          enum:
+            - East US
+            - West US
+            - North Europe
+            - West Europe
+            - Southeast Asia
+        owner:
+          title: Owner
+          type: string
+          description: Team or individual responsible for this resource
+          default: platform-team
+
+    - title: Deployment Action
+      properties:
+        action:
+          title: Terraform Action
+          type: string
+          description: Action to perform
+          default: plan
+          enum:
+            - plan
+            - apply
+            - destroy
+
+  steps:
+    - id: deploy
+      name: Trigger Deployment
+      action: github:actions:dispatch
+      input:
+        workflowId: terraform-azure-storage.yml
+        repoUrl: github.com?repo=backstage-infra&owner=Shrinet82
+        branchOrTagName: main
+        workflowInputs:
+          resource_group_name: ${{ parameters.resourceGroupName }}
+          storage_account_name: ${{ parameters.storageAccountName }}
+          location: ${{ parameters.location }}
+          owner: ${{ parameters.owner }}
+          action: ${{ parameters.action }}
+
+  output:
+    links:
+      - title: Repository
+        url: https://github.com/Shrinet82/backstage-infra
+      - title: Open in Catalog
+        icon: catalog
+        entityRef: resource:default/${{ parameters.storageAccountName }}

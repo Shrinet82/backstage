@@ -3,11 +3,12 @@ kind: Template
 metadata:
   name: go-service-template
   title: Go Microservice
-  description: Create a simple HTTP server in Go
+  description: Create a simple HTTP server in Go with optional ArgoCD deployment
   tags:
     - go
     - golang
     - backend
+    - argocd
 spec:
   owner: guests
   type: service
@@ -49,6 +50,26 @@ spec:
             allowedHosts:
               - github.com
 
+    - title: Deployment Options
+      properties:
+        deployToCluster:
+          title: Deploy to Kubernetes via ArgoCD
+          type: boolean
+          default: true
+          description: Create an ArgoCD application to deploy this service
+        namespace:
+          title: Target Namespace
+          type: string
+          default: default
+          description: Kubernetes namespace to deploy to
+        syncPolicy:
+          title: Sync Policy
+          type: string
+          default: automated
+          enum:
+            - manual
+            - automated
+
   steps:
     - id: fetch-base
       name: Fetch Base
@@ -75,6 +96,25 @@ spec:
         repoContentsUrl: ${{ steps['publish'].output.repoContentsUrl }}
         catalogInfoPath: '/catalog-info.yaml'
 
+    - id: deploy-argocd
+      name: Deploy via ArgoCD
+      if: ${{ parameters.deployToCluster }}
+      action: github:actions:dispatch
+      input:
+        workflowId: argocd-deploy.yml
+        repoUrl: github.com?repo=backstage-infra&owner=Shrinet82
+        branchOrTagName: main
+        workflowInputs:
+          app_name: ${{ parameters.component_id }}
+          namespace: ${{ parameters.namespace }}
+          repo_url: ${{ steps['publish'].output.remoteUrl }}
+          path: 'k8s'
+          branch: main
+          sync_policy: ${{ parameters.syncPolicy }}
+          prune: 'true'
+          self_heal: 'true'
+          notify_email: ''
+
   output:
     links:
       - title: Repository
@@ -82,3 +122,5 @@ spec:
       - title: Open in catalog
         icon: catalog
         entityRef: ${{ steps['register'].output.entityRef }}
+      - title: ArgoCD Dashboard
+        url: https://143.110.177.137:32477/applications/${{ parameters.component_id }}

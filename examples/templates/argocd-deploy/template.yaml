@@ -107,6 +107,6 @@ spec:
   output:
     links:
       - title: ArgoCD Dashboard
-        url: https://139.59.77.78:32447/applications/${{ parameters.appName }}
+        url: https://143.110.177.137:32477/applications/${{ parameters.appName }}
       - title: View Deployment Workflow
         url: https://github.com/Shrinet82/backstage-infra/actions
